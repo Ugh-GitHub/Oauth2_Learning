@@ -1,0 +1,16 @@
+@media (min-width: 1150px) {
+  footer {
+    margin-top: 250px;
+    padding: 20px;
+    text-align: center;
+    display: block;
+  }
+}
+
+@media (max-width: 1150px) {
+  footer {
+    padding: 20px;
+    text-align: center;
+    display: block;
+  }
+}
