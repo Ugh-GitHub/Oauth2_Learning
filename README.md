@@ -5,12 +5,15 @@ Learn https://react-redux.js.org/api/connect
 with hooks
 
 # To Do (converting to functional components)
-LoginForm
-RegisterForm
-LandingPage
+
+
 ProtectedRoute (SUPER BUGGY)
 
 # Done
 App
 Login
 Register
+User Page
+LoginForm
+RegisterForm
+LandingPage

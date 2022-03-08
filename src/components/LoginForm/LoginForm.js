@@ -10,6 +10,7 @@ function LoginForm({ dispatch, store }) {
 
   const login = (event) => {
     event.preventDefault();
+    console.log("from login user",username, password);
 
     if (username && password) {
       dispatch({

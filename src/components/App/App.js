@@ -26,9 +26,6 @@ function App({ dispatch }) {
   useEffect(() => {
     dispatch({ type: 'FETCH_USER' });
   });
-  // componentDidMount() {
-  //   this.props.dispatch({ type: 'FETCH_USER' });
-  // }
 
   return (
     <Router>

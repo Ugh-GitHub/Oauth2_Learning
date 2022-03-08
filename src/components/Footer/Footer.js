@@ -6,6 +6,8 @@ import './Footer.css';
 // It doesn't dispatch any redux actions or display any part of redux state
 // or even care what the redux state is, so it doesn't need 'connect()'
 
-const Footer = () => <footer>&copy; Peter Pierce, 2021</footer>;
+const year = new Date().getFullYear();
+
+const Footer = () => <footer>&copy; Peter Pierce, {year}</footer>;
 
 export default Footer;
