@@ -1,4 +1,4 @@
-import React, { Component, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Route,
@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import Nav from '../Nav/Nav';
 import Footer from '../Footer/Footer';
 
-import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+// import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 import LandingPage from '../LandingPage/LandingPage';
 import AboutPage from '../AboutPage/AboutPage';
@@ -51,6 +51,11 @@ function App({ dispatch }) {
             exact
             path="/user"
             element={< UserPage />}
+            // element={
+            //   <RequireAuth redirectTo="/login">
+            //     < UserPage />
+            //   </RequireAuth>
+            // }
           />
 
           <Route
@@ -70,7 +75,12 @@ function App({ dispatch }) {
             exact
             path="/login"
             element={< LoginPage />}
-            authRedirect="/user"
+            // element={
+            //   <RequireAuth redirectTo="/user">
+            //     < LoginPage />
+            //   </RequireAuth>
+            // }
+
           />
           <Route
             // with authRedirect:
@@ -79,7 +89,11 @@ function App({ dispatch }) {
             exact
             path="/registration"
             element={< RegisterPage />}
-            authRedirect="/user"
+            // element={
+            //   <RequireAuth redirectTo="/user">
+            //     < RegisterPage />
+            //   </RequireAuth>
+            // }
           />
           <Route
             // with authRedirect:
@@ -88,7 +102,11 @@ function App({ dispatch }) {
             exact
             path="/home"
             element={< LandingPage />}
-            authRedirect="/user"
+            // element={
+            //   <RequireAuth redirectTo="/user">
+            //     < LandingPage />
+            //   </RequireAuth>
+            // }
           />
 
           {/* <ProtectedRoute
@@ -108,6 +126,15 @@ function App({ dispatch }) {
     </Router>
   );
 
+}
+
+function RequireAuth({ children, redirectTo }, { store }) {
+  let isAuthenticated =false;
+  if (store.user.id >= 1) {
+    isAuthenticated = true;
+  }
+  
+  return isAuthenticated ? children : <Navigate to={redirectTo} />;
 }
 
 export default connect()(App);

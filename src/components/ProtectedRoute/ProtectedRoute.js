@@ -35,12 +35,13 @@ const ProtectedRoute = (props) => {
   } else {
     // if they are not logged in, check the loginMode on Redux State
     // if the mode is 'login', show the LoginPage
-    ComponentToShow = LoginPage;
+    return <Route path="/login" element={< LoginPage />}/>;
   }
 
   // redirect a logged in user if an authRedirect prop has been provided
   if (store.user.id && authRedirect != null) {
-    return <Route exact from={otherProps.path} to={authRedirect} />;
+    return <Route path={otherProps.path} element={<Navigate replace to={"/user"} />} />;
+    // <Redirect exact from={otherProps.path} to={authRedirect} />;
   } else if (!store.user.id && authRedirect != null) {
     ComponentToShow = ComponentToProtect;
   }
@@ -51,7 +52,7 @@ const ProtectedRoute = (props) => {
       // all props like 'exact' and 'path' that were passed in
       // are now passed along to the 'Route' Component
       {...otherProps}
-      component={ComponentToShow}
+      element={<ComponentToShow/>}
     />
   );
 };
