@@ -50,12 +50,12 @@ function App({ dispatch }) {
             // logged in shows UserPage else shows LoginPage
             exact
             path="/user"
-            element={< UserPage />}
-            // element={
-            //   <RequireAuth redirectTo="/login">
-            //     < UserPage />
-            //   </RequireAuth>
-            // }
+            // element={< UserPage />}
+            element={
+              <RequireAuth redirectTo="/login">
+                < UserPage />
+              </RequireAuth>
+            }
           />
 
           <Route
@@ -74,12 +74,12 @@ function App({ dispatch }) {
             // - else shows LoginPage at /login
             exact
             path="/login"
-            element={< LoginPage />}
-            // element={
-            //   <RequireAuth redirectTo="/user">
-            //     < LoginPage />
-            //   </RequireAuth>
-            // }
+            // element={< LoginPage />}
+            element={
+              <LoggedIn redirectTo="/user">
+                < LoginPage />
+              </LoggedIn>
+            }
 
           />
           <Route
@@ -88,12 +88,12 @@ function App({ dispatch }) {
             // - else shows RegisterPage at "/registration"
             exact
             path="/registration"
-            element={< RegisterPage />}
-            // element={
-            //   <RequireAuth redirectTo="/user">
-            //     < RegisterPage />
-            //   </RequireAuth>
-            // }
+            // element={< RegisterPage />}
+            element={
+              <LoggedIn redirectTo="/user">
+                < RegisterPage />
+              </LoggedIn>
+            }
           />
           <Route
             // with authRedirect:
@@ -101,12 +101,12 @@ function App({ dispatch }) {
             // - else shows LandingPage at "/home"
             exact
             path="/home"
-            element={< LandingPage />}
-            // element={
-            //   <RequireAuth redirectTo="/user">
-            //     < LandingPage />
-            //   </RequireAuth>
-            // }
+            // element={< LandingPage />}
+            element={
+              <LoggedIn redirectTo="/user">
+                < LandingPage />
+              </LoggedIn>
+            }
           />
 
           {/* <ProtectedRoute
@@ -129,12 +129,21 @@ function App({ dispatch }) {
 }
 
 function RequireAuth({ children, redirectTo }, { store }) {
-  let isAuthenticated =false;
-  if (store.user.id >= 1) {
-    isAuthenticated = true;
-  }
+  let isAuthenticated = true;
+  // if (store.user.id >= 1) {
+  //   isAuthenticated = true;
+  // }
   
   return isAuthenticated ? children : <Navigate to={redirectTo} />;
+}
+
+function LoggedIn({ children, redirectTo }, { store }) {
+  let isAuthenticated = true;
+  // if (store.user.id >= 1) {
+  //   isAuthenticated = true;
+  // }
+  
+  return isAuthenticated ? <Navigate to={redirectTo} /> : children;
 }
 
 export default connect()(App);
