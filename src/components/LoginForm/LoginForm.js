@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { useStore, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
+
 import mapStoreToProps from '../../redux/mapStoreToProps';
 
-function LoginForm({ dispatch, props }) {
-  const store = useStore()
+function LoginForm({ dispatch, store }) {
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -28,13 +29,11 @@ function LoginForm({ dispatch, props }) {
   return (
     <form className="formPanel" onSubmit={login}>
       <h2>Login</h2>
-      {/* FIX BELOW */}
-      {props.store.errors.loginMessage && (
+      {store.errors.loginMessage && (
         <h3 className="alert" role="alert">
-          {props.store.errors.loginMessage}
+          {store.errors.loginMessage}
         </h3>
       )}
-      {/* FIX ABOVE */}
       <div>
         <label htmlFor="username">
           Username:
