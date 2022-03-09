@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import mapStoreToProps from '../../redux/mapStoreToProps';
+
 
 import './LandingPage.css';
 
@@ -10,6 +11,14 @@ import RegisterForm from '../RegisterForm/RegisterForm';
 
 function LandingPage() {
   const [heading, setHeading] = useState('Functional Component');
+
+  // let navigate = useNavigate();
+  // https://stackoverflow.com/questions/56353125/react-router-how-to-redirect-user-if-logged-in
+  // useEffect(() => {
+  //   if(isAuthenticated()){
+  //    this.props.history.push("/dashboard")
+  //   }
+  // });
 
   let navigate = useNavigate();
 

@@ -8,6 +8,7 @@ import {
 
 import { connect } from 'react-redux';
 
+
 import Nav from '../Nav/Nav';
 import Footer from '../Footer/Footer';
 
@@ -138,7 +139,8 @@ function RequireAuth({ children, redirectTo }, { store }) {
 }
 
 function LoggedIn({ children, redirectTo }, { store }) {
-  let isAuthenticated = true;
+  let isAuthenticated = false;
+  
   // if (store.user.id >= 1) {
   //   isAuthenticated = true;
   // }
