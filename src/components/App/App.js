@@ -48,93 +48,22 @@ function App({ dispatch, store }) {
       <div>
         <Nav />
         <Routes>
-          {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
+          {/* Redirects */}
           <Route path="/" element={<Navigate replace to="/home" />} />
-
-          {/* Visiting localhost:3000/about will show the about page. */}
-          <Route
-            // shows AboutPage at all times (logged in or not)
-            path="/about"
-            element={< AboutPage />}
-          />
-
-          {/* For protected routes, the view could show one of several things on the same route.
-          Visiting localhost:3000/user will show the UserPage if the user is logged in.
-          If the user is not logged in, the ProtectedRoute will show the LoginPage (component).
-          Even though it seems like they are different pages, the user is always on localhost:3000/user */}
-          <Route
-            // logged in shows UserPage else shows LoginPage
-            exact
-            path="/user"
-            // element={< UserPage />}
-            element={
-              <LoggedOut>
-                < UserPage />
-              </LoggedOut>
-            }
-          />
-
-          <Route
-            // logged in shows InfoPage else shows LoginPage
-            exact
-            path="/info"
-            element={< InfoPage />}
-          />
-
-          {/* When a value is supplied for the authRedirect prop the user will
-          be redirected to the path supplied when logged in, otherwise they will
-          be taken to the component and path supplied. */}
-          <Route
-            // with authRedirect:
-            // - if logged in, redirects to "/user"
-            // - else shows LoginPage at /login
-            exact
-            path="/login"
-            // element={< LoginPage />}
-            element={
-              <LoggedIn>
-                < LoginPage />
-              </LoggedIn>
-            }
-
-          />
-          <Route
-            // with authRedirect:
-            // - if logged in, redirects to "/user"
-            // - else shows RegisterPage at "/registration"
-            exact
-            path="/registration"
-            // element={< RegisterPage />}
-            element={
-              <LoggedIn>
-                < RegisterPage />
-              </LoggedIn>
-            }
-          />
-          <Route
-            // with authRedirect:
-            // - if logged in, redirects to "/user"
-            // - else shows LandingPage at "/home"
-            exact
-            path="/home"
-            // element={< LandingPage />}
-            element={
-              <LoggedIn>
-                < LandingPage />
-              </LoggedIn>
-            }
-          />
-
-          {/* <ProtectedRoute
-            // with authRedirect:
-            // - if logged in, redirects to "/user"
-            // - else shows LandingPage at "/home"
-            exact
-            path="/finished"
-            component={Finished}
-          />  */}
-
-          {/* If none of the other routes matched, we will show a 404. */}
+          {/* Always accessible */}
+          <Route path="/about" element={< AboutPage />}/>
+          {/* Protected Routes */}
+          <Route element={<LoggedOut/>}>
+            <Route path="/user" element={<UserPage/>}/>
+            <Route path="/info" element={< InfoPage />}/>
+          </Route>
+          {/* Signed-Out Routes */}
+          <Route element={<LoggedIn/>}>
+              <Route path="/home" element={<LandingPage/>}/>
+              <Route path="/registration" element={<RegisterPage/>}/>
+              <Route path="/login" element={<LoginPage/>}/>
+          </Route>
+          {/* 404 Page */}
           <Route render={() => <h1>404</h1>} />
         </Routes>
         <Footer />
