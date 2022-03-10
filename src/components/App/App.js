@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useLayoutEffect, useEffect, useState } from 'react';
 import {
   BrowserRouter as Router,
   Route,
@@ -20,14 +20,29 @@ import UserPage from '../UserPage/UserPage';
 import InfoPage from '../InfoPage/InfoPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
+import LoggedIn from '../LoggedIn/LoggedIn';
+import LoggedOut from '../LoggedOut/LoggedOut';
 
 import './App.css';
+import mapStoreToProps from '../../redux/mapStoreToProps';
 
-function App({ dispatch }) {
-  useEffect(() => {
+function App({ dispatch, store }) {
+  const [loading, setLoading] = useState(false);
+  // const [user,setUser] = useState('');
+  // const [isAuthenticated,setIsAuthenticated] = useState(false);
+
+  useLayoutEffect(() => {
     dispatch({ type: 'FETCH_USER' });
-  });
+  }, [dispatch]);
 
+
+  // useEffect(() => {
+  //   console.log("hello world", LoggedIn)
+  //   setTimeout(() => console.log("hello world", store),5000);
+  // }, []);
+  
+
+  if (loading) return null;
   return (
     <Router>
       <div>
@@ -53,9 +68,9 @@ function App({ dispatch }) {
             path="/user"
             // element={< UserPage />}
             element={
-              <RequireAuth redirectTo="/login">
+              <LoggedOut>
                 < UserPage />
-              </RequireAuth>
+              </LoggedOut>
             }
           />
 
@@ -77,7 +92,7 @@ function App({ dispatch }) {
             path="/login"
             // element={< LoginPage />}
             element={
-              <LoggedIn redirectTo="/user">
+              <LoggedIn>
                 < LoginPage />
               </LoggedIn>
             }
@@ -91,7 +106,7 @@ function App({ dispatch }) {
             path="/registration"
             // element={< RegisterPage />}
             element={
-              <LoggedIn redirectTo="/user">
+              <LoggedIn>
                 < RegisterPage />
               </LoggedIn>
             }
@@ -104,7 +119,7 @@ function App({ dispatch }) {
             path="/home"
             // element={< LandingPage />}
             element={
-              <LoggedIn redirectTo="/user">
+              <LoggedIn>
                 < LandingPage />
               </LoggedIn>
             }
@@ -129,23 +144,4 @@ function App({ dispatch }) {
 
 }
 
-function RequireAuth({ children, redirectTo }, { store }) {
-  let isAuthenticated = true;
-  // if (store.user.id >= 1) {
-  //   isAuthenticated = true;
-  // }
-  
-  return isAuthenticated ? children : <Navigate to={redirectTo} />;
-}
-
-function LoggedIn({ children, redirectTo }, { store }) {
-  let isAuthenticated = false;
-  
-  // if (store.user.id >= 1) {
-  //   isAuthenticated = true;
-  // }
-  
-  return isAuthenticated ? <Navigate to={redirectTo} /> : children;
-}
-
-export default connect()(App);
+export default connect(mapStoreToProps)(App);
